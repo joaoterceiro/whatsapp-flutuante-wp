@@ -10,28 +10,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Garantir que a variável $options esteja disponível
-if (!isset($options) || !is_array($options)) {
-    $options = get_option('wpfww_options', array(
-        'button_enabled' => 0,
-        'contacts' => array(
-            array(
-                'number' => '',
-                'enabled' => 0,
-                'message' => 'Oi! Tudo bem? Gostaria de saber mais sobre seus serviços e pedir um orçamento. Como a gente pode fazer isso?'
-            ),
-            array(
-                'number' => '',
-                'enabled' => 0,
-                'message' => 'Oi! Tudo bem? Gostaria de saber mais sobre seus serviços e pedir um orçamento. Como a gente pode fazer isso?'
-            )
-        ),
-        'button_position' => 'right',
-        'tooltip_text' => 'Clique para conversar no WhatsApp',
-        'button_color' => '#25d366',
-        'button_size' => 'medium'
-    ));
-}
+// Garantir que o objeto $this esteja disponível
+$options = $this->options;
 ?>
 
 <div class="wrap">
@@ -47,7 +27,7 @@ if (!isset($options) || !is_array($options)) {
         <div class="wpfww-admin-content">
             <p><?php echo esc_html__('Configure os números de WhatsApp e personalize o botão flutuante.', 'whatsapp-flutuante-wp'); ?></p>
             
-            <form method="post" action="<?php echo esc_url(admin_url('admin.php?page=whatsapp-flutuante-wp')); ?>" id="wpfww-form">
+            <form method="post" action="" id="wpfww-form">
                 <?php wp_nonce_field('wpfww_save_options', 'wpfww_nonce'); ?>
                 
                 <!-- Ativar/Desativar Botão -->
@@ -161,7 +141,7 @@ if (!isset($options) || !is_array($options)) {
                 
                 <!-- Botão de Salvar -->
                 <div class="wpfww-submit-btn">
-                    <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo esc_attr__('Salvar Configurações', 'whatsapp-flutuante-wp'); ?>">
+                    <input type="submit" name="wpfww_submit" id="submit" class="button button-primary" value="<?php echo esc_attr__('Salvar Configurações', 'whatsapp-flutuante-wp'); ?>">
                 </div>
             </form>
         </div>
