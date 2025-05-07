@@ -1,0 +1,214 @@
+/* Estilos para o painel administrativo do WhatsApp Flutuante WP */
+.wpfww-admin-container {
+  max-width: 900px;
+  margin: 20px 0;
+}
+
+.wpfww-admin-header {
+  background-color: #25d366;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Remover texto indesejado */
+.wpfww-admin-header::after,
+.wpfww-admin-header::before {
+  content: none !important;
+  display: none !important;
+}
+
+.wpfww-admin-header h1 {
+  color: #fff;
+  margin: 0;
+  font-size: 24px;
+}
+
+.wpfww-admin-header .whatsapp-icon {
+  margin-right: 15px;
+  width: 40px;
+  height: 40px;
+}
+
+.wpfww-admin-content {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.wpfww-form-group {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.wpfww-form-group:last-child {
+  border-bottom: none;
+}
+
+.wpfww-form-group h2 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.wpfww-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-right: 10px;
+}
+
+.wpfww-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wpfww-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.wpfww-slider:before {
+  position: absolute;
+  content: '';
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked+.wpfww-slider {
+  background-color: #25d366;
+}
+
+input:focus+.wpfww-slider {
+  box-shadow: 0 0 1px #25d366;
+}
+
+input:checked+.wpfww-slider:before {
+  transform: translateX(26px);
+}
+
+.wpfww-contact-card {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.wpfww-contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.wpfww-contact-title {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.wpfww-preview {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.wpfww-preview-button {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 60px;
+  font-size: 24px;
+}
+
+.wpfww-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 782px) {
+  .wpfww-settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wpfww-settings-field {
+  margin-bottom: 15px;
+}
+
+.wpfww-settings-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.wpfww-settings-field input[type='text'],
+.wpfww-settings-field input[type='number'],
+.wpfww-settings-field textarea,
+.wpfww-settings-field select {
+  width: 100%;
+}
+
+.wpfww-settings-field textarea {
+  min-height: 100px;
+}
+
+.wpfww-submit-btn {
+  margin-top: 20px;
+}
+
+.wpfww-help-text {
+  font-style: italic;
+  color: #666;
+  margin-top: 5px;
+}
+
+.wpfww-error {
+  border-color: #dc3232 !important;
+}
+
+.wpfww-success-notice {
+  background: #f7fff7;
+  border-left: 4px solid #25d366;
+  padding: 10px;
+  margin: 15px 0;
+}
+
+/* Correção para o menu lateral do WordPress */
+#adminmenu .dashicons-whatsapp:before {
+  content: "\f232";
+  font-family: dashicons;
+  color: #25d366;
+}

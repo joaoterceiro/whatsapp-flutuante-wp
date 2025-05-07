@@ -1,0 +1,72 @@
+/**
+ * Estilos adicionais para corrigir problemas específicos da interface admin
+ */
+
+/* Remove o texto "enter and activate" e outros elementos indesejados */
+.wpfww-admin-header:after,
+.wpfww-admin-header:before {
+  content: none !important;
+  display: none !important;
+}
+
+.wpfww-admin-header>*:not(h1):not(.whatsapp-icon) {
+  display: none !important;
+}
+
+/* Oculta mensagens de erro que estejam vazando para o frontend */
+.wpfww-admin-container .warning,
+.wpfww-admin-container [class*="undefined"],
+.wpfww-admin-container [class*="warning"],
+.wpfww-admin-container [class*="error"] {
+  display: none !important;
+}
+
+/* Estiliza corretamente o ícone do WhatsApp no menu */
+#adminmenu .dashicons-whatsapp:before {
+  content: "\f232";
+  color: #25d366 !important;
+}
+
+/* Corrige posicionamento do botão toggle */
+.wpfww-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Certifica que os radio buttons ficam alinhados */
+.wpfww-settings-field input[type="radio"] {
+  vertical-align: middle;
+  margin-top: -1px;
+}
+
+/* Garante que o texto da tooltip seja exibido corretamente */
+#wpfww_tooltip_text {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Limpa layouts quebrados */
+.wpfww-admin-content {
+  clear: both;
+  position: relative;
+}
+
+/* Garante que o color picker seja exibido corretamente */
+.wp-picker-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Remove mensagens de erro que aparecem no seletor de tamanho */
+select#wpfww_button_size {
+  width: 100%;
+  max-width: 300px;
+}
+
+select#wpfww_button_size option[value="undefined"] {
+  display: none !important;
+}
