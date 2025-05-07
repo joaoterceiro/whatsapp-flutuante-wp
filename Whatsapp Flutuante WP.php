@@ -146,7 +146,11 @@ class WhatsappFlutuanteWP {
      * Registrar as configurações
      */
     public function register_settings() {
-        register_setting('wpfww_settings', 'wpfww_options', array($this, 'sanitize_options'));
+        register_setting(
+            'wpfww_settings', 
+            'wpfww_options', 
+            array($this, 'sanitize_options')
+        );
     }
     
     /**
@@ -220,9 +224,6 @@ class WhatsappFlutuanteWP {
             return;
         }
         
-        // Remover todos os estilos e scripts que possam estar interferindo
-        wp_dequeue_style('wp-admin');
-        
         // Estilos para a área administrativa
         wp_enqueue_style('wpfww-admin-css', WPFWW_URL . 'assets/css/admin.css', array(), WPFWW_VERSION);
         
@@ -230,7 +231,7 @@ class WhatsappFlutuanteWP {
         wp_enqueue_style('wpfww-admin-extra-css', WPFWW_URL . 'assets/css/admin-extra.css', array('wpfww-admin-css'), WPFWW_VERSION);
         
         // Scripts para a área administrativa
-        wp_enqueue_script('wpfww-admin-js', WPFWW_URL . 'assets/js/admin.js', array('jquery'), WPFWW_VERSION, true);
+        wp_enqueue_script('wpfww-admin-js', WPFWW_URL . 'assets/js/admin.js', array('jquery', 'wp-color-picker'), WPFWW_VERSION, true);
         
         // Color picker
         wp_enqueue_style('wp-color-picker');
@@ -374,49 +375,26 @@ class WhatsappFlutuanteWP {
             return;
         }
         
-        // Salvar as opções se o formulário foi enviado
-        if (isset($_POST['submit']) && check_admin_referer('wpfww_save_options', 'wpfww_nonce')) {
-            // Preparar os dados do formulário para processamento
-            $input = array();
+        // Verificar se o formulário foi enviado e processar os dados
+        if (isset($_POST['wpfww_submit']) && check_admin_referer('wpfww_save_options', 'wpfww_nonce')) {
+            // Obter dados do formulário
+            $input = isset($_POST['wpfww_options']) ? $_POST['wpfww_options'] : array();
             
-            // Botão habilitado/desabilitado
-            $input['button_enabled'] = isset($_POST['wpfww_options']['button_enabled']) ? 1 : 0;
+            // Verificar estado do botão habilitado
+            $input['button_enabled'] = isset($input['button_enabled']) ? 1 : 0;
             
-            // Contatos - importante garantir a preservação do estado habilitado/desabilitado
-            $input['contacts'] = array();
-            if (isset($_POST['wpfww_options']['contacts']) && is_array($_POST['wpfww_options']['contacts'])) {
-                foreach ($_POST['wpfww_options']['contacts'] as $index => $contact) {
-                    $input['contacts'][$index] = array(
-                        'number' => isset($contact['number']) ? $contact['number'] : '',
-                        'enabled' => isset($contact['enabled']) ? 1 : 0,
-                        'message' => isset($contact['message']) ? $contact['message'] : ''
-                    );
+            // Processar status 'enabled' dos contatos
+            if (isset($input['contacts']) && is_array($input['contacts'])) {
+                foreach ($input['contacts'] as $index => $contact) {
+                    $input['contacts'][$index]['enabled'] = isset($contact['enabled']) ? 1 : 0;
                 }
             }
             
-            // Posição do botão
-            $input['button_position'] = isset($_POST['wpfww_options']['button_position']) ? $_POST['wpfww_options']['button_position'] : 'right';
+            // Atualizar as opções
+            update_option('wpfww_options', $input);
             
-            // Texto da tooltip
-            $input['tooltip_text'] = isset($_POST['wpfww_options']['tooltip_text']) ? $_POST['wpfww_options']['tooltip_text'] : '';
-            
-            // Cor do botão
-            $input['button_color'] = isset($_POST['wpfww_options']['button_color']) ? $_POST['wpfww_options']['button_color'] : '#25d366';
-            
-            // Tamanho do botão
-            $input['button_size'] = isset($_POST['wpfww_options']['button_size']) ? $_POST['wpfww_options']['button_size'] : 'medium';
-            
-            // Sanitizar as opções
-            $sanitized_options = $this->sanitize_options($input);
-            
-            // Salvar as opções no banco de dados
-            update_option('wpfww_options', $sanitized_options);
-            
-            // Atualizar a propriedade de opções
-            $this->options = $sanitized_options;
-            
-            // Limpar o cache
-            delete_transient('wpfww_active_contacts');
+            // Atualizar a propriedade de opções para refletir a mudança
+            $this->options = get_option('wpfww_options');
             
             // Exibir mensagem de sucesso
             echo '<div class="notice notice-success is-dismissible"><p>' . __('Configurações salvas com sucesso!', 'whatsapp-flutuante-wp') . '</p></div>';
